@@ -13,9 +13,8 @@ from PowerManager import Ui_Form
 def LockScreen():## دالة قفل الشاشة
     ctypes.windll.user32.LockWorkStation()  # lockscreen
 
-def media(): # دالة إغلاق الطاقة
-    os.system("K:\python\my-app\ssifat-assalat-othman-khamiss.mp4")
-    #os.system(r'rundll32.exe powrprof.dll,SetSuspendState Hibernate')
+def Hebernate(): # دالة إغلاق الطاقة
+    os.system(r'rundll32.exe powrprof.dll,SetSuspendState Hibernate')
 class main (QWidget , Ui_Form):
     def __init__(self): # constractor
         QWidget.__init__(self)
@@ -37,7 +36,7 @@ class main (QWidget , Ui_Form):
             elif self.after.isChecked():
                 self.countdown()#### اظهار العد التنازلي لتنفيذ المهمة
                 h = self.min.value() * 60 ###التحويل من الثواني الى الدقائق###
-                th = Timer(h, media)
+                th = Timer(h, Hebernate)
                 th.start()## تفعيل المهمة بعد الوقت المختار في الدقائق
         if self.lock.isChecked():###عند اختيار قفل الشاشة###
             if self.after.isChecked():
