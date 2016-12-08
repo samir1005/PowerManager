@@ -103,6 +103,7 @@ class Ui_Form(object):
         self.label.setStyleSheet(_fromUtf8("color: rgb(255, 255, 255);"))
         self.label.setObjectName(_fromUtf8("label"))
         self.min = QtGui.QSpinBox(self.groupBox_2)
+        self.min.setMaximum(1000)
         self.min.setSuffix(" min")
         self.min.valueChanged.connect(self.After)
         self.min.setEnabled(False)

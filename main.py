@@ -4,17 +4,33 @@ import platform
 from PyQt4.QtCore import QTime,QTimer
 from PyQt4.QtCore import *
 from threading import Timer
-
+from subprocess import check_call
 
 import os ,ctypes , subprocess , time , datetime , sys
 from time import strftime
 from PowerManager import Ui_Form
 
+def Sleep():
+    os.system(r'Rundll32.exe powrprof.dll,SetSuspendState Standby')
+
 def LockScreen():## دالة قفل الشاشة
-    ctypes.windll.user32.LockWorkStation()  # lockscreen
+    #ctypes.windll.user32.LockWorkStation()  # lockscreen
+    os.system(r'Rundll32.exe user32.dll,LockWorkStation')
 
 def Hebernate(): # دالة إغلاق الطاقة
-    os.system(r'rundll32.exe powrprof.dll,SetSuspendState Hibernate')
+    if sys.platform == "linux" or sys.platform == "linux2":
+        # linux
+        print("linux")
+    elif sys.platform == "darwin":
+        # MAC OS X
+        print("mac")
+
+    elif sys.platform == "win32":
+        os.system(r'rundll32.exe powrprof.dll,SetSuspendState Hibernate')
+        # Windows
+
+
+
 class main (QWidget , Ui_Form):
     def __init__(self): # constractor
         QWidget.__init__(self)
@@ -32,7 +48,7 @@ class main (QWidget , Ui_Form):
     def submit(self):  #التطبيق عند الضغط على زر تنفيذ
         if self.heber.isChecked():#عند تفعيل زر إغلاق الطاقة
             if self.now.isChecked():### عند تفعيل خيار الآن
-                media()##استدعاء دالةاغلاق الطاقة
+                Hebernate()##استدعاء دالةاغلاق الطاقة
             elif self.after.isChecked():
                 self.countdown()#### اظهار العد التنازلي لتنفيذ المهمة
                 h = self.min.value() * 60 ###التحويل من الثواني الى الدقائق###
@@ -48,6 +64,8 @@ class main (QWidget , Ui_Form):
                 LockScreen()
 
                 # subprocess.call(["shutdown", "/l ","t", self.min.setValue])
+        if self.sleep.isChecked():
+            Sleep()
 
 
 ###############إظهار وف المهمة لكل اختيار###############
