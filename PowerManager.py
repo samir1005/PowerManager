@@ -10,12 +10,7 @@ from PyQt4 import QtCore, QtGui
 from PyQt4.QtGui import *
 import platform
 from PyQt4.QtCore import QTime,QTimer
-from PyQt4.QtCore import *
-from threading import Thread
 
-
-import os ,ctypes , subprocess , time , datetime , sys
-from time import strftime
 
 #os.system('C:\\Users\silent\\Desktop\ssifat-assalat-othman-khamiss.mp4')
 #subprocess.call(["shutdown", "/l"]) # log off

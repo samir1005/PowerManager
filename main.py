@@ -10,6 +10,10 @@ import os ,ctypes , subprocess , time , datetime , sys
 from time import strftime
 from PowerManager import Ui_Form
 
+def Restart():
+    os.system(r'Shutdown.exe -r -t 00')
+def ShutDown():
+    os.system(r'Shutdown.exe -s -t 00')
 def Sleep():
     os.system(r'Rundll32.exe powrprof.dll,SetSuspendState Standby')
 
@@ -28,6 +32,8 @@ def Hebernate(): # دالة إغلاق الطاقة
     elif sys.platform == "win32":
         os.system(r'rundll32.exe powrprof.dll,SetSuspendState Hibernate')
         # Windows
+def LogOff():
+    os.system(r'')
 
 
 
@@ -51,21 +57,36 @@ class main (QWidget , Ui_Form):
                 Hebernate()##استدعاء دالةاغلاق الطاقة
             elif self.after.isChecked():
                 self.countdown()#### اظهار العد التنازلي لتنفيذ المهمة
-                h = self.min.value() * 60 ###التحويل من الثواني الى الدقائق###
-                th = Timer(h, Hebernate)
-                th.start()## تفعيل المهمة بعد الوقت المختار في الدقائق
+                self.Minute(Hebernate)#استدعاء دالة الدقائق#
         if self.lock.isChecked():###عند اختيار قفل الشاشة###
             if self.after.isChecked():
                 self.countdown()
-                t=self.min.value()*60
-                v=Timer(t,LockScreen)
-                v.start()
+                self.Minute(LockScreen)
             elif self.now.isChecked():
                 LockScreen()
-
-                # subprocess.call(["shutdown", "/l ","t", self.min.setValue])
         if self.sleep.isChecked():
-            Sleep()
+            if self.after.isChecked():
+                self.countdown()
+                self.Minute(Sleep)
+            elif self.now.isChecked:
+                Sleep()
+        if self.restart.isChecked:
+            if self.after.isChecked:
+                self.countdown()
+                self.Minute(Restart)
+            elif self.now.isChecked:
+                Restart()
+        if self.logoff.isChecked:
+            if self.after.isChecked:
+                self.countdown()
+                self.Minute(LogOff)
+            elif self.now.isChecked:
+                LogOff()
+
+    def Minute(self,function):
+        t = self.min.value() * 60
+        v = Timer(t, function)
+        v.start()
 
 
 ###############إظهار وف المهمة لكل اختيار###############
